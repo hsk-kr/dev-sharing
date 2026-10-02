@@ -68,6 +68,8 @@ tests/*.test.ts              unit + API tests
 
 ### Task 1: Scaffold, config and database
 
+**Issue:** #1
+
 **Files:**
 - Create: `package.json`, `tsconfig.json`, `.gitignore`, `LICENSE`
 - Create: `config/members.json`, `src/types.ts`, `src/config.ts`, `src/db/db.ts`
@@ -418,12 +420,14 @@ Expected: 4 tests pass; typecheck prints nothing and exits 0.
 git add -A
 git commit -m "feat: scaffold project, config and SQLite schema
 
-Closes #<issue>"
+Closes #1"
 ```
 
 ---
 
 ### Task 2: Domain logic (time, URLs, status)
+
+**Issue:** #2
 
 **Files:**
 - Create: `src/domain/time.ts`, `src/domain/url.ts`, `src/domain/status.ts`
@@ -640,12 +644,14 @@ Expected: all pass, typecheck clean.
 git add -A
 git commit -m "feat: add time, URL and status domain logic
 
-Closes #<issue>"
+Closes #2"
 ```
 
 ---
 
 ### Task 3: Post schema, JSON Schema and teammate prompt
+
+**Issue:** #3
 
 **Files:**
 - Create: `src/schema/post.ts`
@@ -810,12 +816,14 @@ Expected: all pass, typecheck clean.
 git add -A
 git commit -m "feat: add post schema, JSON Schema export and teammate prompt
 
-Closes #<issue>"
+Closes #3"
 ```
 
 ---
 
 ### Task 4: Posts, comments and marks storage + feed/board queries
+
+**Issue:** #4
 
 **Files:**
 - Create: `src/db/posts.ts`, `src/db/engagement.ts`, `src/feed.ts`
@@ -1260,12 +1268,14 @@ Expected: all pass, typecheck clean.
 git add -A
 git commit -m "feat: add post, comment and mark storage with feed and board queries
 
-Closes #<issue>"
+Closes #4"
 ```
 
 ---
 
 ### Task 5: Seed script with realistic fake data
+
+**Issue:** #5
 
 **Files:**
 - Create: `scripts/seed.ts`
@@ -1447,12 +1457,14 @@ Run: `bun run typecheck` (expected clean), then:
 git add -A
 git commit -m "feat: add dev seed script with realistic fake posts
 
-Closes #<issue>"
+Closes #5"
 ```
 
 ---
 
 ### Task 6: Read API and member session
+
+**Issue:** #6
 
 **Files:**
 - Create: `src/api/common.ts`, `src/api/session.ts`, `src/api/posts.ts`, `src/api/app.ts`
@@ -1707,12 +1719,14 @@ Expected: all pass, typecheck clean.
 git add -A
 git commit -m "feat: add read API and member session
 
-Closes #<issue>"
+Closes #6"
 ```
 
 ---
 
 ### Task 7: Web shell, name picker and home feed
+
+**Issue:** #7
 
 **Files:**
 - Create: `bunfig.toml`, `src/server.ts`
@@ -2339,12 +2353,14 @@ Open `http://localhost:3000` in a browser: pick a name → home shows the 6-memb
 git add -A
 git commit -m "feat: add web shell, name picker and home feed
 
-Closes #<issue>"
+Closes #7"
 ```
 
 ---
 
 ### Task 8: Post page, team board and archive (read-only)
+
+**Issue:** #8
 
 **Files:**
 - Create: `web/components/StatusRow.tsx`, `web/components/Comments.tsx`
@@ -2615,12 +2631,14 @@ With `bun run dev` running (re-seed with `bun run seed` if needed), check in the
 git add -A
 git commit -m "feat: add post page, team board and archive
 
-Closes #<issue>"
+Closes #8"
 ```
 
 ---
 
 ### Task 9: Comments, "nothing to add" and Submit
+
+**Issue:** #9
 
 **Files:**
 - Create: `src/api/engagement.ts`, `web/components/MarkButton.tsx`, `web/pages/Submit.tsx`
@@ -3138,12 +3156,14 @@ With `bun run dev`, check in the browser:
 git add -A
 git commit -m "feat: add comments, nothing-to-add marks and member submissions
 
-Closes #<issue>"
+Closes #9"
 ```
 
 ---
 
 ### Task 10: Scheduler, runs log and Agent page (fake agent)
+
+**Issue:** #10
 
 **Files:**
 - Create: `src/agent/types.ts`, `src/agent/fake.ts`, `src/db/runs.ts`, `src/runs-view.ts`, `src/scheduler.ts`, `src/api/runs.ts`, `web/pages/Runs.tsx`
@@ -3783,12 +3803,14 @@ With `bun run dev`: on a weekday after 10:00 London time the scheduler immediate
 git add -A
 git commit -m "feat: add scheduler with catch-up and retries, runs log and Agent page
 
-Closes #<issue>"
+Closes #10"
 ```
 
 ---
 
 ### Task 11: Real Claude agent
+
+**Issue:** #11
 
 **Files:**
 - Create: `src/agent/prompt.ts`, `src/agent/claude.ts`, `scripts/agent-smoke.ts`
@@ -4100,12 +4122,14 @@ git commit -m "feat: add headless Claude Code agent with isolated config
 
 Smoke run took <N>s.
 
-Closes #<issue>"
+Closes #11"
 ```
 
 ---
 
 ### Task 12: Hosting, README and final check
+
+**Issue:** #12
 
 **Files:**
 - Create: `README.md`
@@ -4211,5 +4235,5 @@ Grep for leaks: `git grep -nE 'ANTHROPIC_API_KEY=|authtoken:|sk-ant-' -- . ':!bu
 git add -A
 git commit -m "docs: add README and record hosting findings
 
-Closes #<issue>"
+Closes #12"
 ```
