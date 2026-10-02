@@ -94,7 +94,7 @@ browser ──ngrok──▶ Bun.serve ─┬─ /api/*  → Hono API ──┐ 
 
 - Bun 1.3: runtime, `bun:sqlite`, `bun test`, bundler via HTML imports (no Vite).
 - Hono for the API.
-- React 19, React Router 7, TanStack Query (refetch on focus and every 30s so the board stays fresh), Tailwind CSS v4.
+- React 19, React Router 8 (declarative mode), TanStack Query (refetch on focus and every 30s so the board stays fresh), Tailwind CSS v4.
 - zod 4.
 - TypeScript throughout.
 
@@ -167,10 +167,11 @@ All routes read the current member from the cookie (except session routes).
 | Method | Route | Purpose |
 |---|---|---|
 | GET | `/api/members` | Members list. |
-| GET/POST | `/api/session` | Current member / pick member (sets cookie). |
-| GET | `/api/feed?scope=recent\|archive&unread=1` | Posts grouped by day, with per-member caught-up and comment count. |
+| GET/POST/DELETE | `/api/session` | Current member / pick member (sets cookie) / switch member (clears cookie). |
+| GET | `/api/feed?scope=recent\|archive` | Posts newest first, with per-member caught-up and comment count. "My unread" filters on the client. |
 | GET | `/api/posts/:id` | Post, comments, marks, per-member caught-up. |
-| POST | `/api/posts` | Member submission (validated by `PostInput`). |
+| POST | `/api/posts/preview` | Validate pasted JSON (`{ text }`) without saving; 409 if the URL was already posted. |
+| POST | `/api/posts` | Member submission (`{ text }`, validated by `PostInput`); 409 with `existingId` on duplicates. |
 | GET | `/api/submit-prompt` | Generated teammate prompt + JSON example. |
 | POST | `/api/posts/:id/comments` | Add comment. |
 | PATCH/DELETE | `/api/comments/:id` | Edit/delete own comment (403 otherwise). |
@@ -206,6 +207,7 @@ Two-letter codes, because initials collide (Sojeong/Seongkuk, Pablo/Pardeep): `S
 - `bun start` in a terminal on the laptop. The start script wraps the server in `caffeinate -i` so the Mac does not idle-sleep while it runs (closing the lid still sleeps; missed slots catch up on wake).
 - Public URL: `ngrok http <port>`. ngrok is installed and configured on the laptop. **To verify in the hosting issue:** whether the account has a fixed domain (so the link stays the same across restarts) and whether visitors see an ngrok warning page first; document both in the README.
 - SQLite file in `data/`, gitignored.
+- `SCHEDULER=off` disables automatic slot runs (used for checks and smoke tests); "Run now" still works.
 
 ## Testing
 
