@@ -3832,6 +3832,7 @@ test("prompt includes the date, weekday, slot, recency, covered posts and the on
   expect(p).toContain("last 72 hours");
   expect(p).toContain("- Old story — https://example.com/old");
   expect(p).toContain("exactly one");
+  expect(p).toContain("open the url with WebFetch");
   expect(buildAgentPrompt({ ...ctx, recentPosts: [], slotTime: null })).toContain("- (nothing yet)");
 });
 
@@ -3936,6 +3937,7 @@ Rules:
 - It must be published in the last ${ctx.recencyHours} hours.
 - It must not repeat a story we already covered (list below), even from a different URL.
 - url must be the primary source: official blog, release notes, repository, or the original reporting.
+- Before answering, open the url with WebFetch and confirm it loads and matches the title.
 - Return exactly one item: the best one available.
 
 How to write the fields:
@@ -4072,17 +4074,19 @@ Expected: all pass, clean.
 - [ ] **Step 5: Real smoke test**
 
 Run: `bun scripts/agent-smoke.ts`
-Expected: a valid post about a real, recent AI/SWE story from a primary source, and `took Ns`. Record N in the commit message. Open the URL and confirm it is real and recent.
+Expected: a valid post about a real, recent AI/SWE story from a primary source, and `took Ns`. Record N in the commit message.
+
+Check the link mechanically: `curl -sIL -o /dev/null -w '%{http_code}\n' <url>` → `200` (some sites answer 403 to curl; then open it in a browser). Confirm the page matches the title and is recent.
 
 - [ ] **Step 6: Isolation check**
 
 Run from `data/agent-cwd`:
 
 ```bash
-cd data/agent-cwd && echo 'List the names of every skill and slash command available to you, then say whether your context contains any text mentioning "superpowers", "claude-mem" or "EXTREMELY_IMPORTANT" (yes/no). Be brief.' | claude -p --model claude-opus-5-5 --tools "" --no-session-persistence --setting-sources "" --strict-mcp-config
+cd data/agent-cwd && echo 'List the names of every skill and slash command available to you, then say whether your context contains any text injected by hooks or plugins (yes/no). Be brief.' | claude -p --model claude-opus-5-5 --tools "" --no-session-persistence --setting-sources "" --strict-mcp-config
 ```
 
-Expected: no plugin skills listed and the answer "No". (Verified once on 2026-10-02 with Claude Code 2.1.287; re-run here to confirm.) If plugin skills or hook text appear, stop and find the flag that disables them before continuing.
+Expected: no plugin skills listed (built-in slash commands are fine) and the answer "No". (Verified once on 2026-10-02 with Claude Code 2.1.287; re-run here to confirm.) If plugin skills or hook text appear, stop and find the flag that disables them before continuing.
 
 - [ ] **Step 7: End-to-end through the app**
 
